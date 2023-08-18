@@ -7,16 +7,28 @@
 typedef struct argapi_ARG
 {
     char longArgument[BUF_SIZE];
-    char shortArgument;
     int required_or_not;
 } ARGAPI_Arguments;
+
+typedef struct ARGAPI_line
+{
+    ARGAPI_Arguments *args;
+    void (*init)(ARGAPI_line *ptr);
+    void (*end)(ARGAPI_line *ptr);
+    void (*addArgument)(ARGAPI_line *ptr, char *strArg);
+    void (*removeArgument)(ARGAPI_line *ptr, char *strArg);
+
+} ARGAPI_line;
+
+void init(ARGAPI_Arguments *ptr);
+void end(ARGAPI_Arguments *ptr);
+void addArgument(ARGAPI_Arguments *ptr, char *strArg);
+void removeArgument(ARGAPI_Arguments *ptr, char *strArg);
 
 /*
 int verifyValid(
     ARGAPI_Arguments *ptr,
     int *argc,
     char **argv);
-
-
 */
 #endif
