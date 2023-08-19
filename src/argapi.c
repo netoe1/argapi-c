@@ -6,7 +6,6 @@
 #include <stdbool.h>
 #include "../include/argapi.h"
 #include "../modules/itrargs/itrargs.h"
-#include "../modules/double-list/include/dlist.h"
 #define EMPTY "empty"
 static bool inited = false;
 

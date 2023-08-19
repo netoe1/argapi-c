@@ -1,4 +1,7 @@
 [submodule "externalLibs/itrargs"]
 	path = externalLibs/itrargs
 	url = https://github.com/netoe1/itrargs
-
+[submodule "modules/argapi_doubly-list"]
+	path = modules/argapi_doubly-list
+	url = https://github.com/netoe1/doubly-list
+	branch = argapi_implementation
