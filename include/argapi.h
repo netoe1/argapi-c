@@ -20,11 +20,6 @@ typedef struct ARGAPI_line
 
 } ARGAPI_line;
 
-void init(ARGAPI_Arguments *ptr);
-void end(ARGAPI_Arguments *ptr);
-void addArgument(ARGAPI_Arguments *ptr, char *strArg);
-void removeArgument(ARGAPI_Arguments *ptr, char *strArg);
-
 /*
 int verifyValid(
     ARGAPI_Arguments *ptr,
