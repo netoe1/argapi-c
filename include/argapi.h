@@ -4,26 +4,20 @@
 #define ARGAPI_REQUIRED 1
 #define ARGAPI_NOT_REQUIRED 1
 
-typedef struct argapi_ARG
-{
-    char longArgument[BUF_SIZE];
-    int required_or_not;
-} ARGAPI_Arguments;
+#include <stdbool.h>
+#include "../modules/argapi_doubly-list/include/argapi_dlist.h"
 
 typedef struct ARGAPI_line
 {
-    ARGAPI_Arguments *args;
-    void (*init)(ARGAPI_line *ptr);
-    void (*end)(ARGAPI_line *ptr);
-    void (*addArgument)(ARGAPI_line *ptr, char *strArg);
-    void (*removeArgument)(ARGAPI_line *ptr, char *strArg);
+    ARGAPI_DLIST_ARG *arg_head_list;
+    char **argv;
+    int argc;
 
 } ARGAPI_line;
 
-/*
-int verifyValid(
-    ARGAPI_Arguments *ptr,
-    int *argc,
-    char **argv);
-*/
+void ARGAPI_LINE_GetArguments(ARGAPI_DLIST_ARG *arg_head_list, const char **argv, const int argc);
+void ARGAPI_LINE_VerifyDictionary(ARGAPI_DLIST_ARG *arg_head_list);
+void ARGAPI_LINE_AddArgument(ARGAPI_DLIST_ARG *arg_head_list, const char *str_argument);
+void ARGAPI_LINE_RemoveArgument(ARGAPI_DLIST_ARG *arg_head_list, const char *str_argument);
+
 #endif

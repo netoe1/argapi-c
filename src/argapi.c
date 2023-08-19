@@ -7,7 +7,6 @@
 #include "../include/argapi.h"
 #include "../modules/itrargs/itrargs.h"
 #define EMPTY "empty"
-static bool inited = false;
 
 /*
 int verifyValid(
