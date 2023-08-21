@@ -1,9 +1,6 @@
-[submodule "externalLibs/itrargs"]
-	path = externalLibs/itrargs
-	url = https://github.com/netoe1/itrargs
-[submodule "modules/itrargs"]
-	path = modules/itrargs
-	url = https://github.com/netoe1/itrargs
 [submodule "modules/double-list"]
 	path = modules/double-list
 	url = https://github.com/netoe1/doubly-list
+[submodule "modules/itargs"]
+	path = modules/itargs
+	url = https://github.com/netoe1/itrargs

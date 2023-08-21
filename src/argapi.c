@@ -4,46 +4,56 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdarg.h>
 #include "../include/argapi.h"
-#include "../modules/itrargs/itrargs.h"
-#include "../modules/double-list/include/dlist.h"
-#define EMPTY "empty"
+#include "../modules/double-list/include/argapi_dlist.h"
+#include "../modules/itargs/itrargs.h"
+
 static bool inited = false;
 
-/*
-int verifyValid(
-    ARGAPI_Arguments *ptr, // Ver se existe o ponteiro para o tratador de argumentos, para armezenar os dados.
-    int *argc,             // Receber o ponteiro do argc da função main
-    char **argv)           // Receber o ponteiro de ponteiro do argv, para tratar a string.
+typedef struct commandLine
 {
-    // Verificar ponteiro valido
+    ARGAPI_DLIST_ARG *arguments;
+    int *argc;
+    char **argv;
+} ARGAPI_CLI_Struct;
 
-    if (
-        ptr != NULL && *argc < 0)
+void ARGAPI_AddValidArgNotRequired(ARGAPI_CLI_Struct *ptr, ...)
+{
+    va_list args;
+    va_start(args, sizeof(args) / sizeof(va_list));
+    for (int i = 0; i < sizeof(args) / sizeof(va_list); i++)
     {
-        ITRARGS_Line getArgs;
-        char aux[BUF_SIZE];
-
-        // Copiar o argv para um string auxiliar!
-        for (int i = 0; i < sizeof(argv) / sizeof(argv[0]); i++)
-        {
-            if (i == 0)
-            {
-                strncpy(aux, argv[i], sizeof(argv[i]) - 1);
-                continue;
-            }
-
-            strncat(aux, argv[i], sizeof(aux) - 1);
-        }
-
-        // Fazer o parse do argv
-
-        ITRARGS_init(&getArgs);
-        ITRARGS_tokens(&getArgs, aux);
-
-        ITRARGS_end(&getArgs);
+        const char *str = va_arg(args, const char *);
+        ARGAPI_DLIST_addArguments(ptr->arguments, str, ARG_NOT_REQUIRED);
     }
-    return 0;
+
+    va_end(args);
 }
 
-*/
+void ARGAPI_AddValidArgIsRequired(ARGAPI_CLI_Struct *ptr, ...)
+{
+    va_list args;
+    va_start(args, sizeof(args) / sizeof(va_list));
+    for (int i = 0; i < sizeof(args) / sizeof(va_list); i++)
+    {
+        const char *str = va_arg(args, const char *);
+        ARGAPI_DLIST_addArguments(ptr->arguments, str, ARG_REQUIRED);
+    }
+    va_end(args);
+}
+
+void ARGAPI_AddCommands(ARGAPI_CLI_Struct *ptr, void (*pointerToFunction)(), const char *strCommand, REQUIRE_TYPE required_or_not)
+{
+    // I've to parse the command
+    ITRARGS_Line strCommand_toParse;
+    ITRARGS_init(&strCommand_toParse);
+    ITRARGS_tokens(&strCommand_toParse, strCommand);
+
+    for (unsigned int i = 0; i < sizeof(strCommand_toParse.string) / sizeof(strCommand_toParse.string[0]); i++)
+    {
+        ARGAPI_DLIST_addArguments(ptr->arguments, strCommand_toParse.string[i], required_or_not);
+    }
+
+    ITRARGS_end(&strCommand_toParse);
+}
