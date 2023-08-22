@@ -1,10 +1,12 @@
 #include "../include/argapi.h"
 
-int main(void)
+int main(int argc, char **argv)
 {
     ARGAPI_CLI_Struct line;
-    ARGAPI_AddValidArgNotRequired(&line,5,"hello","hello","hello","Hello!");
-    ARGAPI_freeMem(&line);
+    ARGAPI_addCommand(&line, "--help", ARG_NOT_REQUIRED, NULL);
+
+    ARGAPI_DLIST_display(line.arguments);
+    ARGAPI_freeArgsMem(&line);
 
     return 0;
 }

@@ -16,10 +16,11 @@ typedef struct commandLine
     int *argc;
     char **argv;
 } ARGAPI_CLI_Struct;
-
-void ARGAPI_AddValidArgNotRequired(ARGAPI_CLI_Struct *ptr, int count, ...);
-void ARGAPI_AddValidArgIsRequired(ARGAPI_CLI_Struct *ptr, int count, ...);
-void ARGAPI_AddCommands(ARGAPI_CLI_Struct *ptr, const char *strCommand, REQUIRE_TYPE required_or_not);
+/*
+void ARGAPI_addValidArgNotRequired(ARGAPI_CLI_Struct *ptr, int count, ...);
+void ARGAPI_addValidArgIsRequired(ARGAPI_CLI_Struct *ptr, int count, ...);
+*/
+void ARGAPI_addCommand(ARGAPI_CLI_Struct *ptr, const char *strCommand, REQUIRE_TYPE required_or_not, void(*fn_to_exec));
 void ARGAPI_removeCommand(ARGAPI_CLI_Struct *ptr, const char *strCommand);
-void ARGAPI_freeMem(ARGAPI_CLI_Struct *ptr);
+void ARGAPI_freeArgsMem(ARGAPI_CLI_Struct *ptr);
 #endif
