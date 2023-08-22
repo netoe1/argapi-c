@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Werror -Wmissing-prototypes
+#CFLAGS = -Wall -Werror -Wmissing-prototypes
 #OBJS = dlist.o main.o
 FILE_MAIN = main.o
 

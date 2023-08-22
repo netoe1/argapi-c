@@ -8,8 +8,6 @@
 #include "../modules/itargs/itrargs.h"
 #include "../include/argapi.h"
 
-
-
 /*
 void ARGAPI_addValidArgNotRequired(ARGAPI_CLI_Struct *ptr, int count, ...)
 {
@@ -42,10 +40,10 @@ void ARGAPI_addValidArgIsRequired(ARGAPI_CLI_Struct *ptr, int count, ...)
     }
 }
 */
-void ARGAPI_addCommands(ARGAPI_CLI_Struct *ptr, const char *strCommand, REQUIRE_TYPE required_or_not, void(*fn_to_exec)) // Stable!
+void ARGAPI_addCommand(ARGAPI_CLI_Struct *ptr, const char *strCommand, REQUIRE_TYPE required_or_not, void(*fn_to_exec)) // Stable!
 {
 
-    if (ptr != NULL)
+    if (ptr != NULL && strCommand != NULL)
     {
         if (fn_to_exec != NULL)
         {
@@ -56,49 +54,25 @@ void ARGAPI_addCommands(ARGAPI_CLI_Struct *ptr, const char *strCommand, REQUIRE_
             ptr->arguments->exec_void_fn = NULL;
         }
 
-        char aux[strlen(strCommand)];
-        ITRARGS_Line strCommand_toParse;
-        strcpy(aux, strCommand);
-        ITRARGS_init(&strCommand_toParse);
-        ITRARGS_tokens(&strCommand_toParse, aux);
-
-        for (unsigned int i = 0; i < strCommand_toParse.height; i++)
-        {
-            ARGAPI_DLIST_addArguments(&ptr->arguments, strCommand_toParse.string[i], required_or_not, fn_to_exec);
-        }
-
-        ITRARGS_end(&strCommand_toParse);
+        ARGAPI_DLIST_addArguments(&ptr->arguments, strCommand, required_or_not, fn_to_exec);
     }
-    // I've to parse the command
 }
-
 void ARGAPI_removeCommand(ARGAPI_CLI_Struct *ptr, const char *strCommand)
 {
     if (ptr != NULL)
     {
-        char aux[strlen(strCommand)];
-        ITRARGS_Line strCommand_toParse;
-        strcpy(aux, strCommand);
-        ITRARGS_init(&strCommand_toParse);
-        ITRARGS_tokens(&strCommand_toParse, aux);
 
         if (strCommand != NULL)
         {
-            if (strCommand_toParse.height == 1)
+            ARGAPI_DLIST_ARG *node = ARGAPI_DLIST_search(ptr->arguments, strCommand);
+            if (node != NULL)
             {
-                ARGAPI_DLIST_ARG *node = ARGAPI_DLIST_search(ptr->arguments, aux);
-                if (node != NULL)
-                {
-                    ARGAPI_DLIST_deleteNode(&ptr->arguments, node);
-                }
-                return;
+                ARGAPI_DLIST_deleteNode(&ptr->arguments, node);
             }
+            return;
         }
-
-        ITRARGS_end(&strCommand_toParse);
     }
 }
-
 void ARGAPI_freeArgsMem(ARGAPI_CLI_Struct *ptr)
 {
     if (ptr != NULL)
