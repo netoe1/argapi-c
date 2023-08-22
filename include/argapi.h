@@ -1,23 +1,25 @@
 #ifndef ARGAPI_H
 #define ARGAPI_H
-#define BUF_SIZE 256
-#define ARGAPI_REQUIRED 1
-#define ARGAPI_NOT_REQUIRED 1
 
-// typedef struct ARGAPI_line
-// {
-//     ARGAPI_Arguments *args;
-//     void (*init)(ARGAPI_line *ptr);
-//     void (*end)(ARGAPI_line *ptr);
-//     void (*addArgument)(ARGAPI_line *ptr, char *strArg);
-//     void (*removeArgument)(ARGAPI_line *ptr, char *strArg);
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <stdarg.h>
+#include "../include/argapi.h"
+#include "../modules/double-list/include/argapi_dlist.h"
+#include "../modules/itargs/itrargs.h"
 
-// } ARGAPI_line;
+typedef struct commandLine
+{
+    ARGAPI_DLIST_ARG *arguments;
+    int *argc;
+    char **argv;
+} ARGAPI_CLI_Struct;
 
-/*
-int verifyValid(
-    ARGAPI_Arguments *ptr,
-    int *argc,
-    char **argv);
-*/
+void ARGAPI_AddValidArgNotRequired(ARGAPI_CLI_Struct *ptr, int count, ...);
+void ARGAPI_AddValidArgIsRequired(ARGAPI_CLI_Struct *ptr, int count, ...);
+void ARGAPI_AddCommands(ARGAPI_CLI_Struct *ptr, const char *strCommand, REQUIRE_TYPE required_or_not);
+void ARGAPI_removeCommand(ARGAPI_CLI_Struct *ptr, const char *strCommand);
+void ARGAPI_freeMem(ARGAPI_CLI_Struct *ptr);
 #endif
