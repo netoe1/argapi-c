@@ -1,6 +1,0 @@
-[submodule "modules/double-list"]
-	path = modules/double-list
-	url = https://github.com/netoe1/doubly-list
-[submodule "modules/itargs"]
-	path = modules/itargs
-	url = https://github.com/netoe1/itrargs
