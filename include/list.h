@@ -5,7 +5,7 @@
 
 struct Node
 {
-    ARGAPI_Options *options;
+    ARGAPI_Options *option;
     struct Node *next;
 };
 
@@ -21,7 +21,7 @@ typedef struct LinkedList LinkedList;
 void LIST_append(LinkedList *list, ARGAPI_Options *option)
 {
     Node *new_node = (Node *)malloc(sizeof(Node));
-    new_node->options = option;
+    memcpy((ARGAPI_Options*)new_node->option,(ARGAPI_Options*)option,sizeof(ARGAPI_Options));
     new_node->next = NULL;
 
     if (list->head == NULL)
