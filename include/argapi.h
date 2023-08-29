@@ -11,7 +11,7 @@ typedef struct options
     char long_arg[BUF_MAX];
     char short_arg;
     int required_or_not;
-    int position_argc;
+    int position_argv;
 } ARGAPI_Options;
 
 #endif

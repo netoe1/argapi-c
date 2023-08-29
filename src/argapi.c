@@ -85,3 +85,24 @@ void ARGAPI_freeArgsMem(ARGAPI_CLI_Struct *ptr)
         // Libere a estrutura ARGAPI_CLI_Struct
     }
 }
+
+int ARGAPI_getPosArgv(char *argc, char **argv, char *str_to_locate)
+{
+    int counter;
+    if (argc != NULL && argv != NULL && str_to_locate != NULL)
+    {
+        for (counter = 0; i < argc; i++)
+        {
+            if (strcmp(str_to_locate, argv[i]) == 0)
+            {
+                return counter;
+            }
+        }
+    }
+    return -1;
+}
+
+int ARGAPI_addOptions(ARGAPI_Options *opts,Linked_list *list)
+{
+    return -1;
+}
